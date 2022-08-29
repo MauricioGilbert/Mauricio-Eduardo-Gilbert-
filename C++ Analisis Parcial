@@ -1,0 +1,35 @@
+#include "stdafx.h"
+#include <iostream>
+#include "math.h"
+#include "conio.h"
+using namespace std;
+int main()
+{
+	float parcial1, parcial2, parcial3, parcial4, promedio;
+	cout<<"Ingrese el parcial 1: ";
+	cin>>parcial1;
+	cout<<"Ingrese el parcial 2: ";
+	cin>>parcial2;
+	cout<<"Ingrese el parcial 3: ";
+	cin>>parcial3;
+	cout<<"Ingrese el parcial 4: ";
+	cin>>parcial4;
+	if ((parcial1>=0) && (parcial1<=10) && (parcial2>=0) && (parcial2<=10) && (parcial3>=0) && (parcial3<=10) && (parcial4>=0) && (parcial4<=10))
+	{
+		cout<<"Ingrese el valor valido";
+		promedio= (parcial1+parcial2+parcial3+parcial4)/4;
+		if (promedio>0 && promedio<2)
+			cout<<"Sin derecho a titulo";
+		else
+			if (promedio>=2 && promedio<5)
+				cout<<"Con derecho a Titulo";
+			else
+				if (promedio>=5 && promedio<6)
+					cout<<"Con derecho a Extraordinario";
+				else 
+					cout<<"Aprobado";
+	}
+	else 
+		cout<<"Valores Invalido";
+	getch(); 
+}
