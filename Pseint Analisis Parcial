@@ -1,0 +1,29 @@
+Algoritmo Analisisdeparcial
+	definir parcial1, parcial2, parcial3, parcial4, promedio como real
+	Escribir "Ingrese el parcial1";
+	Leer parcial1
+	Escribir "Ingrese el parcial2";
+	Leer parcial2
+	Escribir "Ingrese el parcial3";
+	Leer parcial3
+	Escribir "Ingrese el parcial4";
+	Leer parcial4
+	Si ((parcial1>=0) && (parcial1<=10)) && ((parcial2>=0) && (parcial2<=10)) && ((parcial3>=0) && (parcial3<=10)) && ((parcial4>=0) && (parcial4<=10)) 
+		Entonces
+		promedio<-(parcial1+parcial2+parcial3+parcial4)/4;
+		Si (promedio>=6) && (promedio<=10) Entonces
+			Escribir "Aprobado"
+		SiNo 
+			Si (promedio>=5) && (promedio<=6) Entonces
+				Escribir "Derecho Extraordinario"
+			SiNo 
+				Si (promedio>=2) && (promedio<5) Entonces
+				Escribir "Derecho a Titulo" 
+			SiNo 
+				Escribir "Sin derecho a Titulo"
+			FinSi
+		FinSi
+	SiNo 
+		Escribir "Sin derecho a Titulo"
+	FinSi
+FinAlgoritmo
