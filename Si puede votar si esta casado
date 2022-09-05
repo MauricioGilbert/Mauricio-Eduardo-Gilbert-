@@ -1,0 +1,28 @@
+
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+
+using namespace std;
+
+void main () {
+
+	int edad, estado;
+	cout<<"Ingrese la edad: "<<endl;
+	cin>>edad;
+	if (edad>=18)
+		cout<<"Puede votar";
+	else 
+		if (edad>=14)
+		{
+			cout<<"Esta casado? Ingresar 1 por si 0 por no"<<endl;
+			cin>>estado;
+			if (estado == 1)
+				cout<<"Puede votar";
+			else
+				cout<<"No puede votar si esta soltero";
+		}
+		else
+			cout<<"No puede votar"<<endl;
+	getch();
+}
