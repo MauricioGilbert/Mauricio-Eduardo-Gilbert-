@@ -1,0 +1,238 @@
+#include <iostream>
+#include <bits/stdc++.h>
+
+using namespace std;
+
+//Inicializamos una estructura de Room
+struct Room {
+  string type = "";
+  double rating = 0.0;
+  float price = 0;
+  bool available = true;
+};
+
+//creamos nuestro vector que almacenara la estructura de Room previamente inicializada
+vector<Room> rooms;
+
+void selectionMessage(){
+    cout<<"su opcion es: ";
+}
+
+//muestra el menu principal
+int showMenu(){
+    system("clear");
+    int opcion;
+    cout<<"Bienvenido al sistema de reservas del hotel"<<endl;
+    cout<<endl;
+    cout<<"seleccione una de las opciones     \n";
+    cout<<"1.- Administracion \n";
+    cout<<"2.- Cliente \n";
+
+    selectionMessage();
+    cin>>opcion;
+    return opcion;
+}
+
+int optionBeds(){
+    int opcion;
+    cout<<"Selecciona el tipo de habitacion: \n";
+        cout<<"1.- simple (1 cama simple) \n";
+        cout<<"2.- doble (2 cama simple) \n";
+        cout<<"3.- familiar (1 cama matrimonial y 2 cama simple) \n";
+        cout<<"4.- triple (3 cama simple) \n";
+        cout<<"5.- doble max (2 cama matrimonial) \n";
+        cout<<"Ingresa tu seleccion: ";cin>>opcion;
+        cout<<endl;
+    return opcion;
+}
+
+
+//retorna los cuartos segun un criterio de busqueda
+void showRoomsByCriteria(int persons, int pricePerPerson){
+    vector<Room> resultRooms;
+    if(rooms.size() > 0){
+        // hacemos una comparacion con todas las habitaciones previamente creada
+        // aquellas que tengan un precio igual o menor al ingresado por el cliente 
+        // son almacenasdas en ResultRooms para luego ser mostradas
+        for(int i=0; i<rooms.size(); i++){
+            int price = rooms[i].price <= pricePerPerson ? true: false;
+            if(rooms[i].available && price ){
+                resultRooms.push_back(rooms[i]);
+            }
+        }
+
+        //iteramos sobre los resultados encontrados y los mostramos en pantalla
+        for(int i=0; i<resultRooms.size();i++){
+            {
+                cout<<"Habitacion "<<i+1<<endl;
+                cout<<"tipo de cuarto:"<<resultRooms[i].type<<endl;
+                cout<<"Rating: "<<resultRooms[i].rating<<endl;
+                cout<<"Precio: "<<resultRooms[i].price<<" Bs"<<endl;
+            }
+
+        }
+    }else{
+        cout<<endl;
+        cout<<"No se encontro habitacion con ese criterio de busqueda."<<endl;
+        cout<<endl;
+    }
+}
+
+void showRooms(){
+    // si existe algun cuarto los mostramos todos
+    // en caso contrario damos un mensaje que no tenemos habitaciones registradas
+    if(rooms.size() > 0){
+        for(int i=0; i<rooms.size(); i++){
+            cout<<"Habitacion "<<i+1<<endl;
+            cout<<"tipo de cuarto:"<<rooms[i].type<<endl;
+            cout<<"Rating: "<<rooms[i].rating<<endl;
+            cout<<"Precio: "<<rooms[i].price<<" Bs"<<endl;
+            if(rooms[i].available){
+                cout<<"Libre: Verdadero"<<endl;
+            }else{
+                cout<<"Libre: falso"<<endl;
+            }
+        }
+    }else{
+        cout<<endl;
+        cout<<"No tiene ninguna habitacion registrada."<<endl;
+        cout<<endl;
+    }
+}
+
+
+void uploadRooms(int amountRooms){
+
+    for(int i=0; i< amountRooms; i++){
+
+        cout<<endl;
+
+        Room newRoom;
+        int optionTypeBed = optionBeds();
+        switch (optionTypeBed)
+        {
+        case 1:
+            newRoom.type = "SIMPLE";
+            break;
+        case 2:
+            newRoom.type = "DOBLE SIMPLE";
+            break;
+        case 3:
+            newRoom.type = "FAMILIAR";
+            break;
+        case 4:
+            newRoom.type = "TRIPLE";
+            break;
+        case 5:
+            newRoom.type = "DOBLE FAMILIAR";
+            break;
+        default:
+            break;
+        }
+
+        int rating;
+        cout<<"Ingresa el rating de esta habitacion del 1 - 10: "; cin>>rating;
+        newRoom.rating = rating;
+
+        float price;
+        cout<<"Ingresa el precio de esta habitacion (bs): "; cin>>price;
+        newRoom.price = price;
+
+        cout<<endl;
+        rooms.push_back(newRoom);
+        
+    }
+
+}
+
+bool login(){
+    string userName, password;
+    system("clear");
+    cout<<"Ingrese su usuario: "; cin>>userName;
+    cout<<"Ingrese su contrasena: "; cin>>password;
+
+    if(
+        userName == "rodrigo" &&
+        password == "rodrigo"
+    ){
+        cout<<endl;
+        cout<<endl;
+        cout<<"Datos correctoss"<<endl;
+        return true;
+    }
+
+    return false;
+}
+
+int menuRooms(){
+    system("clear");
+    int opcion;
+
+    cout<<"Ingrese una de las opciones: "<<endl;
+    cout<<"1.- ver todas las habitaciones"<<endl;
+    cout<<"2.- crear habitaciones"<<endl;
+    cout<<"0.- salir"<<endl;
+    cin>>opcion;
+    return opcion;
+
+}
+
+void accionMenuAdmin(int opcion){
+    switch (opcion)
+    {
+    case 1:
+        showRooms();
+        char letra;
+        cout<<"ingrese cualquier letra para continuar: ";
+        cin>>letra;
+        break;
+    case 2:
+        int amountRooms;
+        cout<<"Cuantas habitaciones desea crear? \n";
+        cin>>amountRooms;
+        uploadRooms(amountRooms);
+        break;
+    
+    default:
+        break;
+    }
+}
+
+void accionMenu(int opcion){
+    switch (opcion)
+    {
+    // si seleccionamos 1 tenemos que hacer login para acceder a administracion
+    case 1:
+        if(login()){
+            int opcion;
+            do{
+                opcion = menuRooms();
+                accionMenuAdmin(opcion);
+            }while(opcion != 0);
+        }else{
+            cout<<"Su datos incorrectos \n";
+        }
+        break;
+    // si seleccionamos 2 se muestra el menu del cliente
+    case 2:
+
+        int amountPersons, amountPrice;
+        cout<<"Para cuantas personas necesita habitacion? : ";cin>>amountPersons;
+        cout<<"Un monto que tiene presupuestado por una noche para una persona? : "; cin>>amountPrice;
+        showRoomsByCriteria(amountPersons, amountPrice);
+        break;
+    
+    default:
+        break;
+    }
+}
+
+// el programa inicia en esta funcion
+int main(){
+    int opcion;
+    do{
+        opcion = showMenu(); //la funcion nos muestro el menu de admistracion o cliente
+        accionMenu(opcion);
+    }while(opcion != 0);
+    return 0;
+}
